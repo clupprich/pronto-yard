@@ -1,10 +1,6 @@
 require 'spec_helper'
 
 describe Pronto::Yard do
-  it 'has a version' do
-    expect(described_class::VERSION).to be
-  end
-
   describe '#run' do
     def run_in_sample(cmd)
       Dir.chdir('./spec/sample') do

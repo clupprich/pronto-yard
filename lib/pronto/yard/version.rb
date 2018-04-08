@@ -1,7 +1,5 @@
-require 'pronto'
-
 module Pronto
-  class Yard < Runner
+  class YardVersion
     VERSION = '0.1.0'
   end
 end
