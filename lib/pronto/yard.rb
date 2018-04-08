@@ -48,9 +48,6 @@ module Pronto
 
     private
 
-    # @private
-    # @param path
-    # @param errors
     def inspect(patch, errors)
       return unless errors.any?
 
@@ -61,9 +58,6 @@ module Pronto
       end
     end
 
-    # @private
-    # @param error
-    # @param line
     def new_message(error, line)
       path = line.patch.delta.new_file[:path]
       Message.new(path, line, :info, error.message, nil, self.class)
