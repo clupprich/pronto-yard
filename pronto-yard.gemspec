@@ -5,7 +5,7 @@ require 'pronto/yard/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'pronto-yard'
-  spec.version       = Pronto::YardVersion::VERSION
+  spec.version       = Pronto::Yard::VERSION
   spec.authors       = ['Christoph Lupprich']
   spec.email         = ['christoph@luppri.ch']
 
