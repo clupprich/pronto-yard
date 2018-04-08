@@ -1,5 +1,9 @@
 # Pronto::Yard
 
+[![Build Status](https://travis-ci.org/clupprich/pronto-yard.svg?branch=master)](https://travis-ci.org/clupprich/pronto-yard)
+
+[Pronto](https://github.com/prontolabs/pronto) runner that provides validation for your YARD documentation using [Yard-Junk](https://github.com/zverok/yard-junk).
+
 ## Installation
 
 Add this line to your application's Gemfile:
