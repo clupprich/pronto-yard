@@ -34,8 +34,7 @@ module Pronto
 
     # Entry point to our Pronto runner
     def run
-      errors = []
-      YardJunk::Janitor.new.run.report(:pronto, pronto: [errors])
+      errors = run_yard
 
       ruby_patches.map do |patch|
         # TODO: Move this to a regex or something, but don't use a private method
@@ -47,6 +46,38 @@ module Pronto
     end
 
     private
+
+    def run_yard
+      errors = []
+
+      # Run in the context of the repo's path
+      Dir.chdir(@patches.repo.path) do
+        # Silence puts statements
+        silent do
+          YardJunk::Janitor.new.run.report(:pronto, pronto: [errors])
+        end
+      end
+
+      errors
+    end
+
+    def silent
+      begin
+        original_stderr = $stderr.clone
+        original_stdout = $stdout.clone
+        $stderr.reopen(File.new('/dev/null', 'w'))
+        $stdout.reopen(File.new('/dev/null', 'w'))
+        retval = yield
+      rescue Exception => e
+        $stdout.reopen(original_stdout)
+        $stderr.reopen(original_stderr)
+        raise e
+      ensure
+        $stdout.reopen(original_stdout)
+        $stderr.reopen(original_stderr)
+      end
+      retval
+    end
 
     def inspect(patch, errors)
       return unless errors.any?
