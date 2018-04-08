@@ -1,30 +1,6 @@
 require 'pronto'
 require 'pronto/yard/version'
-require 'yard-junk'
-
-module YardJunk
-  class Janitor
-    class ProntoReporter
-      def initialize(errors)
-        @errors = errors
-      end
-
-      def finalize; end
-
-      def section(_, _, messages)
-        messages.each do |message|
-          errors << OpenStruct.new(message: message.message, file: message.file, line: message.line)
-        end
-      end
-
-      def stats(**stat); end
-
-      private
-
-      attr_reader :errors
-    end
-  end
-end
+require 'pronto/yard/yard_junk_wrapper'
 
 module Pronto
   class YardRunner < Runner
@@ -48,35 +24,9 @@ module Pronto
     private
 
     def run_yard
-      errors = []
-
-      # Run in the context of the repo's path
-      Dir.chdir(@patches.repo.path) do
-        # Silence puts statements
-        silent do
-          YardJunk::Janitor.new.run.report(:pronto, pronto: [errors])
-        end
-      end
-
-      errors
-    end
-
-    def silent
-      begin
-        original_stderr = $stderr.clone
-        original_stdout = $stdout.clone
-        $stderr.reopen(File.new('/dev/null', 'w'))
-        $stdout.reopen(File.new('/dev/null', 'w'))
-        retval = yield
-      rescue Exception => e
-        $stdout.reopen(original_stdout)
-        $stderr.reopen(original_stderr)
-        raise e
-      ensure
-        $stdout.reopen(original_stdout)
-        $stderr.reopen(original_stderr)
-      end
-      retval
+      wrapper = Yard::YardJunkWrapper.new(path: @patches.repo.path)
+      wrapper.run
+      wrapper.errors
     end
 
     def inspect(patch, errors)
