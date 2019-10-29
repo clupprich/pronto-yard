@@ -56,7 +56,7 @@ GEM
     thor (0.19.4)
     tty-color (0.4.2)
     unicode-display_width (1.3.0)
-    yard (0.9.12)
+    yard (0.9.20)
     yard-junk (0.0.7)
       backports
       rainbow
