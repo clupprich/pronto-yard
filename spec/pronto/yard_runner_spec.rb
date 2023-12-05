@@ -22,7 +22,7 @@ describe Pronto::YardRunner do
         SH
     end
 
-    def create_example_file_in_master
+    def create_example_file_in_main
       run_in_sample <<-SH
         echo "class Example
         def run(account, secret)
@@ -50,7 +50,7 @@ describe Pronto::YardRunner do
     subject do
       ::Rugged::Repository.discover('./spec/sample').workdir
       repo = Pronto::Git::Repository.new('./spec/sample')
-      patches = repo.diff('master', {})
+      patches = repo.diff('main', {})
 
       described_class.new(patches, patches.commit).run
     end
@@ -58,7 +58,7 @@ describe Pronto::YardRunner do
     context 'with no yard issues present' do
       before do
         init_sample
-        create_example_file_in_master
+        create_example_file_in_main
       end
 
       after do
@@ -73,7 +73,7 @@ describe Pronto::YardRunner do
     context 'with yard issues present' do
       before do
         init_sample
-        create_example_file_in_master
+        create_example_file_in_main
         add_example_docs_in_develop
       end
 
