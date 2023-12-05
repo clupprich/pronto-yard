@@ -3,14 +3,17 @@ require 'yard-junk'
 
 module Pronto
   module Yard
+    # Wrapper to run and collect errors from YardJunk
     class YardJunkWrapper
       attr_reader :errors
 
+      # @param path [String] The file's path to run yard report
       def initialize(path:)
         @path = path
         @errors = []
       end
 
+      # @return [Array] Return an array of yard errors
       def run
         # Run in the context of the repo's path
         Dir.chdir(path) do

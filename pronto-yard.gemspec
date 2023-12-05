@@ -18,11 +18,10 @@ Gem::Specification.new do |spec|
   end
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency('pronto', '~> 0.9.0')
-  # TODO: Find out which version we should require
-  spec.add_runtime_dependency('yard-junk')
+  spec.add_runtime_dependency('pronto', '~> 0.11.0')
+  spec.add_runtime_dependency('yard-junk', '~> 0.0.9')
 
-  spec.add_development_dependency 'bundler', '~> 1.16'
-  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'bundler', '~> 2.3.19'
+  spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rspec', '~> 3.4'
 end
